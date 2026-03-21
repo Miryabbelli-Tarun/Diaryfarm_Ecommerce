@@ -1,0 +1,60 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block main-content %}
+<div class="container my-5">
+    <div class="row align-items-center mb-5">
+        <div class="col-md-6">
+            <h2 class="fw-bold mb-4">Our Journey to Purity</h2>
+            <p class="lead text-secondary">
+                Started in 2026, our mission was simple: to bring the taste of the village farm back to the city table.
+            </p>
+            <p>
+                We noticed that finding 100% pure, antibiotic-free milk was becoming impossible. We decided to partner
+                directly with local farmers to ensure that every drop of milk we deliver is as nature intended—creamy,
+                fresh, and full of life.
+            </p>
+        </div>
+        <div class="col-md-6 text-center">
+            <img src="{% static 'app/images/Neel.png' %}" class="img-fluid rounded shadow" alt="Our Farm">
+        </div>
+    </div>
+
+    <hr class="my-5">
+
+    <div class="row text-center mb-5">
+        <div class="col-md-4">
+            <div class="p-3">
+                <i class="fa fa-leaf fa-3x text-success mb-3"></i>
+                <h5>100% Organic</h5>
+                <p class="text-muted">No preservatives, no hormones, and no added water. Just pure dairy.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="p-3">
+                <i class="fa fa-truck fa-3x text-primary mb-3"></i>
+                <h5>Early Morning Delivery</h5>
+                <p class="text-muted">Direct from the farm to your doorstep before your first cup of tea.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="p-3">
+                <i class="fa fa-heart fa-3x text-danger mb-3"></i>
+                <h5>Happy Cattle</h5>
+                <p class="text-muted">Our cows are grass-fed and raised in a stress-free environment.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row bg-light p-5 rounded">
+        <div class="col-12 text-center">
+            <h3 class="fw-bold">The Purity Promise</h3>
+            <p class="mx-auto mt-3" style="max-width: 700px;">
+                "We don't just sell milk; we sell health. Every batch is lab-tested for over 20 parameters of purity
+                before it leaves our facility. If it's not good enough for our children, it's not good enough for
+                yours."
+            </p>
+            <a href="{% url 'home' %}" class="btn btn-primary mt-3 rounded-pill px-4">Shop Fresh Now</a>
+        </div>
+    </div>
+</div>
+{% endblock main-content %}
