@@ -24,3 +24,5 @@ def product_details(request,pk):
         'product':product
     }
     return render(request,'app/product_details.html',context)
+
+

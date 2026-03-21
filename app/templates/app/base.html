@@ -62,10 +62,10 @@
                         Tarun
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="profileDropDown">
-                        <li><a class="dropdown-item" href="">Profile</a></li>
+                        <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
                         <li><a class="dropdown-item" href="">Orders</a></li>
                         <li><a class="dropdown-item" href="">Change Password</a></li>
-                        <li><a class="dropdown-item" href="">Logout</a></li>
+                        <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
                     </ul>
                 </li>
                 <li class="nav-item mx-2">
@@ -75,10 +75,10 @@
                     <a class="nav-link text-white" href="">Wishlist 4</a>
                 </li>
                 <li class="nav-item mx-2">
-                    <a class="nav-link text-white" href="">Login</a>
+                    <a class="nav-link text-white" href="{% url 'customer_login' %}">Login</a>
                 </li>
                 <li class="nav-item mx-2">
-                    <a class="nav-link text-white" href="">Rigister</a>
+                    <a class="nav-link text-white" href="{% url 'customer_register'%}">Rigister</a>
                 </li>
             </ul>
         </div>
