@@ -1,0 +1,49 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block main-content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+
+        <div class="col-lg-10 col-md-12">
+
+            <h2 class="text-center mb-4">Our Fresh Dairy Products</h2>
+
+            <div class="row g-4 justify-content-center">
+                {% for prod in products %}
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 d-flex justify-content-center">
+
+                    <div class="card h-100 shadow-sm border-1 p-3 text-center"
+                        style="width: 18rem; border-radius: 15px;">
+                        <a href="{% url 'product_details' prod.id %}" class="text-decoration-none text-dark">
+
+                            <div class="d-flex align-items-center justify-content-center mb-3" style="height: 180px;">
+                                <img src="{{ prod.product_image.url }}" class="img-fluid" alt="{{ prod.title }}"
+                                    style="max-height: 100%; object-fit: contain;">
+                            </div>
+
+                            <div class="card-body p-0">
+                                <h5 class="fw-bold mb-2">{{ prod.title }}</h5>
+
+                                <div class="mb-3">
+                                    <span class="fw-bold text-danger fs-5">Rs. {{ prod.discount_price }}</span>
+                                    <br>
+                                    <small class="text-muted text-decoration-line-through">
+                                        Rs. {{ prod.selling_price }}
+                                    </small>
+                                </div>
+                                <a href="">
+                                <button class="btn btn-primary w-100 rounded-pill">
+                                    Add to Cart
+                                </button>
+                                </a>
+                            </div>
+                        </a>
+                    </div>
+
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock main-content %}

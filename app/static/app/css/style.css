@@ -1,0 +1,9 @@
+.goodnessseccont img {
+    height: 200px; /* Adjust based on your design */
+    object-fit: contain; /* Ensures the image isn't stretched */
+    margin-bottom: 15px;
+    width: 100%;
+}
+a{
+    text-decoration: none;
+}

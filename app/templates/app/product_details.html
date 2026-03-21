@@ -1,0 +1,61 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block main-content %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-6 text-center mb-4">
+            <div class="product-image-wrapper p-3 border rounded shadow-sm bg-white">
+                <img src="{{ product.product_image.url }}" class="img-fluid" alt="{{ product.title }}"
+                    id="mainProductImg">
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <h1 class="fw-bold">{{ product.title }}</h1>
+            <hr>
+            <h3 class="text-danger fw-bold">Rs. {{ product.discount_price }}
+                <small class="text-muted text-decoration-line-through fs-5">Rs. {{ product.selling_price }}</small>
+            </h3>
+
+            <p class="mt-4 text-secondary">
+                {{ product.description }}
+            </p>
+
+            <div class="d-grid gap-2 d-md-block mt-5">
+                <form action="" method="GET" class="d-inline">
+                    <input type="hidden" name="prod_id" value="{{ product.id }}">
+                    <button type="submit" class="btn btn-primary btn-lg px-5 rounded-pill me-md-2">
+                         Add to Cart
+                    </button>
+                </form>
+
+                <a href="" class="btn btn-success btn-lg px-5 rounded-pill">
+                    Buy Now
+                </a>
+            </div>
+
+            <div class="mt-4">
+                <span class="badge bg-light text-dark border p-2"><i class="fa fa-truck text-primary"></i> Free
+                    Delivery</span>
+                <span class="badge bg-light text-dark border p-2"><i class="fa fa-check-circle text-success"></i> 100%
+                    Organic</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5 pt-5 border-top">
+        <div class="col-md-6">
+            <h4 class="fw-bold text-primary"><i class="fa fa-leaf"></i> Ingredients</h4>
+            <div class="p-4 bg-light rounded shadow-sm mt-3">
+                <p>{{ product.composition }}</p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h4 class="fw-bold text-success"><i class="fa fa-heartbeat"></i>Benefits</h4>
+            <div class="p-4 bg-light rounded shadow-sm mt-3">
+                <p>{{ product.prodapp }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock main-content %}
