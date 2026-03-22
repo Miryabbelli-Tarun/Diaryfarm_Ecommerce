@@ -104,3 +104,23 @@
 //         }
 //     })
 // })
+// $('.plus-cart').click(function(){
+//     var id = $(this).attr("pid").toString(); // Get product ID
+//     var eml = this.parentNode.children; // Target the <span> specifically
+    
+//     $.ajax({
+//         type: "GET",
+//         url: "/pluscart", // This matches your path in urls.py
+//         data: {
+//             prod_id: id
+//         },
+//         success: function(data){
+//             // Update the quantity number on the screen
+//             eml.innerText = data.quantity;
+            
+//             // Update the prices on the right side of the page
+//             document.getElementById("amount").innerText = data.amount;
+//             document.getElementById("totalamount").innerText = data.totalamount;
+//         }
+//     })
+// })

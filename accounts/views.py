@@ -3,9 +3,9 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib import messages
 from accounts.forms import CustomerRegistrationForm, ProfileForm
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth import authenticate,login,logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
-
+from django.contrib.auth.forms import PasswordChangeForm
 from accounts.models import Customer
 # Create your views here.
 def customer_register(request):
@@ -86,3 +86,19 @@ def delete_address(request,pk):
     address.delete()
     messages.success(request,'Address Delete succesfully')
     return redirect('profile')
+
+def change_password(request):
+    if request.method=='POST':
+        form=PasswordChangeForm(request.user,request.POST)
+        if form.is_valid():
+            user=form.save()
+            update_session_auth_hash(request,user)
+            messages.success(request,'password changed succesfully')
+            return redirect('profile')
+        else:
+            messages.warning(request,'something wrong or incorrect password')
+    else:
+        form=PasswordChangeForm(request.user)
+    for field in form.fields.values():
+        field.widget.attrs.update({'class': 'form-control'})
+    return render(request,'change_password.html',{'form':form})

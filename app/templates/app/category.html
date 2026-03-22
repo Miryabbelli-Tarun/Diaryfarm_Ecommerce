@@ -31,11 +31,15 @@
                                         Rs. {{ prod.selling_price }}
                                     </small>
                                 </div>
-                                <a href="">
-                                <button class="btn btn-primary w-100 rounded-pill">
-                                    Add to Cart
-                                </button>
+                             
+                                <form action="/add-to-cart" method="GET" class="d-inline">
+                                    <input type="hidden" name="prod_id" value="{{ prod.id }}">
+                                    <a href="">
+                                    <button class="btn btn-primary w-100 rounded-pill">
+                                        Add to Cart
+                                    </button>
                                 </a>
+                                </form>
                             </div>
                         </a>
                     </div>
