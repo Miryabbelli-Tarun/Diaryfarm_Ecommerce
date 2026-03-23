@@ -3,9 +3,11 @@
 {% block main-content %}
 <div class="container my-5">
     <div class="row">
+        {% if cart_items %}
         <div class="col-sm-6">
             <h4>Order Summary</h4>
             <hr>
+            
             {% for item in cart_items %}
             <div class="card mb-2">
                 <div class="card-body">
@@ -53,6 +55,13 @@
                 </div>
             </form>
         </div>
+        {% else %}
+            <div class="col-12 text-center py-5">
+                <h4>Your Cart is empty!</h4>
+                <p>Add fresh dairy items here.</p>
+                <a href="{% url 'home' %}" class="btn btn-warning">Go Shopping</a>
+            </div>
+        {% endif %}
     </div>
 </div>
 {% endblock main-content %}

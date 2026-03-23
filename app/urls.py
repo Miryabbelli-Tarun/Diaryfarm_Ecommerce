@@ -21,4 +21,6 @@ urlpatterns = [
     path('orderplaced/',views.orderplaced,name='orderplaced'),
     path('orders/',views.orders,name='orders'),
 
+    path('toggle-wishlist/',views.toggle_wishlist,name='toggle_wishlist'),
+    path('show_wishlist/',views.show_wishlist,name='show_wishlist'),
 ]

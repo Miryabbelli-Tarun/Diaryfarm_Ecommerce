@@ -1,0 +1,33 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block main-content %}
+<div class="container my-5">
+    <h3>My Wishlist</h3>
+    <hr>
+    <div class="row">
+        {% if wishlist_items %}
+            {% for item in wishlist_items %}
+            <div class="col-sm-3 mb-4">
+                <div class="card p-3 shadow-sm">
+                    <img src="{{item.product.product_image.url}}" height="150" class="card-img-top" style="object-fit: contain;">
+                    <div class="card-body text-center">
+                        <h6 class="card-title">{{item.product.title}}</h6>
+                        <p class="fw-bold">Rs. {{item.product.discount_price}}</p>
+                        <div class="d-grid gap-2">
+                            <a href="{% url 'product_details' item.product.id %}" class="btn btn-primary btn-sm">View</a>
+                            <a href="{% url 'toggle_wishlist' %}?prod_id={{item.product.id}}" class="btn btn-danger btn-sm">Remove</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-12 text-center py-5">
+                <h4>Your wishlist is empty!</h4>
+                <p>Save your favorite fresh dairy items here.</p>
+                <a href="{% url 'home' %}" class="btn btn-warning">Go Shopping</a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock main-content %}

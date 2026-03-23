@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 from django.db.models import Q
 from accounts.models import Customer
-from app.models import Cart, OrderPlaced, Product
+from app.models import Cart, OrderPlaced, Product, Wishlist
 
 # Create your views here.
 def home(request):
@@ -22,8 +22,10 @@ class CategoryView(View):
 
 def product_details(request,pk):
     product=get_object_or_404(Product,pk=pk)
+    is_in_wishlist=Wishlist.objects.filter(product=product,user=request.user)  #check weather product in wishlist or not
     context={
-        'product':product
+        'product':product,
+        'is_in_wishlist':is_in_wishlist
     }
     return render(request,'app/product_details.html',context)
 
@@ -127,4 +129,23 @@ def orders(request):
     user=request.user
     order_placed=OrderPlaced.objects.filter(user=user)
     return render(request,'app/orders.html',{'order_placed':order_placed})
-            
+
+
+def toggle_wishlist(request):
+    if request.method=='GET':
+        prod_id=request.GET.get('prod_id')
+        product=get_object_or_404(Product,id=prod_id)
+        user=request.user
+        # print(prod_id,user)
+        is_in_wishlist=Wishlist.objects.filter(Q(product=product)&Q(user=user))
+        if is_in_wishlist.exists():
+            is_in_wishlist.delete()
+        else:
+            prod=Wishlist(user=user,product=product)
+            prod.save()
+        return redirect(request.META.get('HTTP_REFERER', 'home'))
+    
+def show_wishlist(request):
+    wishlist_items=Wishlist.objects.filter(user=request.user)
+    print(wishlist_items)
+    return render(request,'app/wishlist.html',{'wishlist_items':wishlist_items})

@@ -65,7 +65,7 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="profileDropDown">
                         <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
-                        <li><a class="dropdown-item" href="">Orders</a></li>
+                        <li><a class="dropdown-item" href="{% url 'orders' %}">Orders</a></li>
                         <li><a class="dropdown-item" href="{% url 'change_password' %}">Change Password</a></li>
                         <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
                     </ul>
@@ -74,7 +74,7 @@
                     <a class="nav-link text-white" href="{% url 'show_cart' %}">Cart 4</a>
                 </li>
                 <li class="nav-item mx-2">
-                    <a class="nav-link text-white" href="">Wishlist 4</a>
+                    <a class="nav-link text-white" href="{% url 'show_wishlist' %}">Wishlist 4</a>
                 </li>
                 {% else %}
                 <li class="nav-item mx-2">

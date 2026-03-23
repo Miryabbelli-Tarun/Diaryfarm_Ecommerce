@@ -25,13 +25,22 @@
                 <form action="/add-to-cart" method="GET" class="d-inline">
                     <input type="hidden" name="prod_id" value="{{ product.id }}">
                     <button type="submit" class="btn btn-primary btn-lg px-5 rounded-pill me-md-2">
-                         Add to Cart
+                        Add to Cart
                     </button>
                 </form>
 
                 <a href="" class="btn btn-success btn-lg px-5 rounded-pill">
                     Buy Now
                 </a>
+                <!-- #wishlist button -->
+                    <a href="{% url 'toggle_wishlist' %}?prod_id={{product.id}}" class="btn btn-light border">
+                        {% if is_in_wishlist %}
+                        <i class="fas fa-heart text-danger"></i> 
+                        {% else %}
+                        <i class="far fa-heart"></i>
+                         {% endif %}
+                    </a>
+
             </div>
 
             <div class="mt-4">
