@@ -49,7 +49,7 @@
         <span><strong>{% if carts %}Rs. {{totalamount}}{% else %} 0{%endif%}</strong></span>
        </li>
       </ul>
-      <div class="d-grid"><a href="" class="btn btn-primary">Checkout</a></div>
+      <div class="d-grid"><a href="{% url 'checkout' %}" class="btn btn-primary">Checkout</a></div>
     </div>
    </div>
   </div>

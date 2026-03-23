@@ -2,7 +2,8 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 from django.db.models import Q
-from app.models import Cart, Product
+from accounts.models import Customer
+from app.models import Cart, OrderPlaced, Product
 
 # Create your views here.
 def home(request):
@@ -75,3 +76,55 @@ def remove_from_cart(request,pid):
     item=Cart.objects.get(user=user,id=pid)
     item.delete()
     return redirect('show_cart')
+
+def checkout(request):
+    user=request.user
+    add=Customer.objects.filter(user=user)
+    cart_items=Cart.objects.filter(user=user)
+    amount=0
+    totalamount=0
+    shipping_amount=0
+    if cart_items:
+        for p in cart_items:
+            tempamount=p.product.discount_price*p.quantity
+            amount+=tempamount
+    totalamount=amount+shipping_amount
+    return render(request,'app/checkout.html',{'add':add,'cart_items':cart_items,'amount':amount,'totalamount':totalamount})
+
+def payment_gateway(request):
+    customer_id=request.GET.get('custid')
+    totalamount=request.GET.get('totalamount')
+    cust_id=get_object_or_404(Customer,id=customer_id)
+    # print(totalamount,cust_id.id)
+    context={
+        'totalamount':totalamount,
+        'custid':cust_id.id
+    }
+    return render(request,'app/payment_gateway.html',context)
+
+def orderplaced(request):
+    user=request.user
+    #get address
+    customer_id=request.GET.get('custid')
+    customer=get_object_or_404(Customer,id=customer_id)
+    #get all cart items
+    cart_items=Cart.objects.filter(user=user)
+    print(user,customer_id)
+    if cart_items:
+        for c in cart_items:
+            order=OrderPlaced(
+                user=user,
+                customer=customer,
+                product=c.product,
+                quantity=c.quantity,
+                status='Accepted'
+            )
+            order.save()
+            c.delete()
+    return redirect('orders')
+
+def orders(request):
+    user=request.user
+    order_placed=OrderPlaced.objects.filter(user=user)
+    return render(request,'app/orders.html',{'order_placed':order_placed})
+            
