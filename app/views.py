@@ -149,3 +149,9 @@ def show_wishlist(request):
     wishlist_items=Wishlist.objects.filter(user=request.user)
     print(wishlist_items)
     return render(request,'app/wishlist.html',{'wishlist_items':wishlist_items})
+
+def search(request):
+    key=request.GET['search']
+    if key:
+        products=Product.objects.filter(title__icontains=key)
+    return render(request,'app/search.html',{'products':products})

@@ -23,4 +23,6 @@ urlpatterns = [
 
     path('toggle-wishlist/',views.toggle_wishlist,name='toggle_wishlist'),
     path('show_wishlist/',views.show_wishlist,name='show_wishlist'),
+
+    path('search/',views.search,name='search'),
 ]

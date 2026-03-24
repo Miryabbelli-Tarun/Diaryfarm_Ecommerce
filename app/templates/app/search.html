@@ -1,0 +1,42 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+
+{% block main-content %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-sm-12">
+            <h3 class="mb-4">Search Results for: <span class="text-primary">"{{request.GET.search}}"</span></h3>
+            <hr>
+            
+            <div class="row">
+                {% if products %}
+                    {% for prod in products %}
+                    <div class="col-sm-3 mb-4 text-center">
+                        <a href="{% url 'product_details' prod.id %}" class="btn">
+                            <div class="card shadow-sm h-100" style="width: 18rem;">
+                                <img src="{{prod.product_image.url}}" class="card-img-top" alt="..." height="200px" style="object-fit: contain; padding: 10px;">
+                                <div class="card-body">
+                                    <h6 class="card-title">{{prod.title}}</h6>
+                                    <p class="card-text fw-bold text-danger">
+                                        Rs. {{prod.discount_price}} 
+                                        <small class="text-decoration-line-through text-muted ml-2">Rs. {{prod.selling_price}}</small>
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="col-12 text-center my-5">
+                        
+                        <h4 class="mt-4 text-muted">No products found matching your search.</h4>
+                        <p>Try searching for "Milk", "Curd", or "Ghee".</p>
+                        <a href="{% url 'home' %}" class="btn btn-warning px-5 fw-bold">Back to Home</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock main-content %}
