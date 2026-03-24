@@ -3,15 +3,18 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 from django.db.models import Q
 from accounts.models import Customer
+from django.contrib.auth.decorators import login_required
 from app.models import Cart, OrderPlaced, Product, Wishlist
 
 # Create your views here.
 def home(request):
     return render(request,'app/home.html')
 
+@login_required(login_url='customer_login')
 def about(request):
     return render(request,'app/about.html')
 
+@login_required(login_url='customer_login')
 def contact(request):
     return render(request,'app/contact.html')
 
@@ -19,7 +22,8 @@ class CategoryView(View):
     def get(self,request,val):
         products=Product.objects.filter(category=val)
         return render(request,'app/category.html',locals())
-
+    
+@login_required(login_url='customer_login')
 def product_details(request,pk):
     product=get_object_or_404(Product,pk=pk)
     is_in_wishlist=Wishlist.objects.filter(product=product,user=request.user)  #check weather product in wishlist or not
@@ -28,7 +32,7 @@ def product_details(request,pk):
         'is_in_wishlist':is_in_wishlist
     }
     return render(request,'app/product_details.html',context)
-
+@login_required(login_url='customer_login')
 def add_to_cart(request):
     user=request.user
     product_id=request.GET.get('prod_id')
@@ -43,6 +47,8 @@ def add_to_cart(request):
         c=Cart(user=user,product=product)
         c.save()
     return redirect('/cart')
+
+@login_required(login_url='customer_login')
 def show_cart(request):
     user=request.user
     carts=Cart.objects.filter(user=user)
@@ -56,6 +62,7 @@ def show_cart(request):
         totalamount=amount+shipping_price
     return render(request,'app/add_to_cart.html',{'carts':carts,'totalamount':totalamount,'amount':amount})
 
+@login_required(login_url='customer_login')
 def plus_cart(request,pid):
     user=request.user
     cart=Cart.objects.get(user=user,id=pid)
@@ -63,6 +70,7 @@ def plus_cart(request,pid):
     cart.save()
     return redirect('show_cart')
 
+@login_required(login_url='customer_login')
 def minus_cart(request,pid):
     user=request.user
     cart=Cart.objects.get(user=user,id=pid)
@@ -73,12 +81,14 @@ def minus_cart(request,pid):
         cart.delete()
     return redirect('show_cart')
 
+@login_required(login_url='customer_login')
 def remove_from_cart(request,pid):
     user=request.user
     item=Cart.objects.get(user=user,id=pid)
     item.delete()
     return redirect('show_cart')
 
+@login_required(login_url='customer_login')
 def checkout(request):
     user=request.user
     add=Customer.objects.filter(user=user)
@@ -93,6 +103,7 @@ def checkout(request):
     totalamount=amount+shipping_amount
     return render(request,'app/checkout.html',{'add':add,'cart_items':cart_items,'amount':amount,'totalamount':totalamount})
 
+@login_required(login_url='customer_login')
 def payment_gateway(request):
     customer_id=request.GET.get('custid')
     totalamount=request.GET.get('totalamount')
@@ -104,6 +115,7 @@ def payment_gateway(request):
     }
     return render(request,'app/payment_gateway.html',context)
 
+@login_required(login_url='customer_login')
 def orderplaced(request):
     user=request.user
     #get address
@@ -125,12 +137,13 @@ def orderplaced(request):
             c.delete()
     return redirect('orders')
 
+@login_required(login_url='customer_login')
 def orders(request):
     user=request.user
     order_placed=OrderPlaced.objects.filter(user=user)
     return render(request,'app/orders.html',{'order_placed':order_placed})
 
-
+@login_required(login_url='customer_login')
 def toggle_wishlist(request):
     if request.method=='GET':
         prod_id=request.GET.get('prod_id')
@@ -144,11 +157,13 @@ def toggle_wishlist(request):
             prod=Wishlist(user=user,product=product)
             prod.save()
         return redirect(request.META.get('HTTP_REFERER', 'home'))
-    
+
+@login_required(login_url='customer_login') 
 def show_wishlist(request):
     wishlist_items=Wishlist.objects.filter(user=request.user)
     print(wishlist_items)
     return render(request,'app/wishlist.html',{'wishlist_items':wishlist_items})
+
 
 def search(request):
     key=request.GET['search']

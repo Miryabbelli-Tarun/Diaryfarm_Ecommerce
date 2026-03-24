@@ -42,6 +42,7 @@ def customer_login(request):
 def customer_logout(request):
     logout(request)
     return redirect('customer_login')
+
 @login_required(login_url='customer_login')
 def profile(request):
     addresses=Customer.objects.filter(user=request.user)
@@ -67,6 +68,7 @@ def profile(request):
     
     return render(request,'profile.html',{'form':form,'addresses':addresses})
 
+@login_required(login_url='customer_login')
 def edit_address(request,pk):
     address=get_object_or_404(Customer,pk=pk,user=request.user)
     form=ProfileForm(instance=address)
@@ -81,12 +83,14 @@ def edit_address(request,pk):
 
     return render(request,'edit_address.html',{'form':form})
 
+@login_required(login_url='customer_login')
 def delete_address(request,pk):
     address=get_object_or_404(Customer,pk=pk,user=request.user)
     address.delete()
     messages.success(request,'Address Delete succesfully')
     return redirect('profile')
 
+@login_required(login_url='customer_login')
 def change_password(request):
     if request.method=='POST':
         form=PasswordChangeForm(request.user,request.POST)
